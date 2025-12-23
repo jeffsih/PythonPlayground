@@ -12,7 +12,7 @@ Next:   - Add multiplication and division operations. (Done)
         - Add a backspace button to remove the last digit entered. (Button is already in place)
         - Handle floats.
 
-Note: At this time BIDMAS is not implemented.
+Note: At this time BIDMAS is not implemented. (Corrected - now implemented)
 """
 
 import tkinter as tk
@@ -27,7 +27,6 @@ def on_num_click(num):
     current = display_label["text"]
     display_label.config(text=current + str(num))
     current_input = current_input + str(num)
-    
 
 def on_add_click():
     global current_input
@@ -42,7 +41,6 @@ def on_add_click():
     operations_list.append('+')
     # Append '+' to the label text
     display_label.config(text=display_label["text"] + " + ")
-
 
 def on_subtract_click():
     global current_input
