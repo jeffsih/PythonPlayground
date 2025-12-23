@@ -6,7 +6,10 @@ Created a calculator window with clickable buttons and allow simple addition and
 The current_value isnt being returned and I dont know how to do so within tkinter button commands.
     Going to use Globals instead for now. Should refactor later to use a class based approach.
 
-Next: Add multiplication and division operations.
+Next:   - Add multiplication and division operations.
+        - Reset the display when a new calculation starts.
+        - Add a clear button to reset the calculator.
+        - Add a backspace button to remove the last digit entered.
 
 Note: At this time BIDMAS is not implemented.
 """
