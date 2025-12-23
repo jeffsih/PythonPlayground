@@ -1,15 +1,16 @@
 """
-Basic Calculator using Tkinter
+Basic Calculator using Tkinter by @jeffsih.
 
 Created a calculator window with clickable buttons and allow simple addition and subtraction.
 
 The current_value isnt being returned and I dont know how to do so within tkinter button commands.
     Going to use Globals instead for now. Should refactor later to use a class based approach.
 
-Next:   - Add multiplication and division operations. (Buttons are already in place)
+Next:   - Add multiplication and division operations. (Done)
         - Reset the display when a new calculation starts. 
         - Add a clear button to reset the calculator. (Button is already in place)
         - Add a backspace button to remove the last digit entered. (Button is already in place)
+        - Handle floats.
 
 Note: At this time BIDMAS is not implemented.
 """
@@ -77,12 +78,18 @@ def on_equal_click():
     # Perform calculation
     result = input_values[0]
 
+    # enumerate through operations list and apply each operation in sequence.
+        # Will need to refactor this to handle BIDMAS later.
     for i, operation in enumerate(operations_list):
         print("Input values:", input_values)
         if operation == '+':
             result += input_values[i + 1]
         elif operation == '-':
             result -= input_values[i + 1] 
+        elif operation == '*':
+            result *= input_values[i + 1]
+        elif operation == '/': # outputs a float for division.
+            result /= input_values[i + 1]
     
     # Display result
     display_label.config(text=str(result))
@@ -90,6 +97,42 @@ def on_equal_click():
     # Clear inputs for next calculation - this will be changed later
     input_values.clear()
     operations_list.clear()
+
+def on_multiply_click():
+    global current_input
+    global input_values
+    global operations_list
+    # Get the current value from the label
+    if display_label["text"] is None or display_label["text"] == "":
+        return
+    
+    input_values.append(int(current_input)) 
+    current_input = ""
+    operations_list.append('*')
+    # Append 'x' to the label text
+    display_label.config(text=display_label["text"] + " x ")
+
+def on_divide_click():
+    global current_input
+    global input_values
+    global operations_list
+    # Get the current value from the label
+    if display_label["text"] is None or display_label["text"] == "":
+        return
+    
+    input_values.append(int(current_input)) 
+    current_input = ""
+    operations_list.append('/')
+    # Append '÷' to the label text
+    display_label.config(text=display_label["text"] + " ÷ ")
+
+
+
+"""
+Window Creation and Button Setup Followed by Main Loop.
+"""
+
+
 
 # Create the main window
 window = tk.Tk()
