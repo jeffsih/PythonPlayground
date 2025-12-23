@@ -8,7 +8,7 @@ The current_value isnt being returned and I dont know how to do so within tkinte
 
 Next:   - Add multiplication and division operations. (Done)
         - Reset the display when a new calculation starts.
-        - Add a clear button to reset the calculator. (Button is already in place)
+        - Add a clear button to reset the calculator. (Done)
         - Add a backspace button to remove the last digit entered. (Button is already in place)
         - Handle floats.
 
@@ -156,6 +156,18 @@ def on_clear_click():
     input_values.clear()
     operations_list.clear()
     display_label.config(text="")
+
+def on_backspace_click():
+    global current_input
+    # Remove the last character from the label text
+    current = display_label["text"]
+    if len(current) > 0:
+        display_label.config(text=current[:-1])
+        current_input = current_input[:-1]
+    # Remove the last character from the operations_list input if needed
+
+    # remove the last character from the input_values if needed
+
 """
 Window Creation and Button Setup Followed by Main Loop.
 """
@@ -222,7 +234,7 @@ tk.Button(
     text="←",
     width=3,
     height=2,
-    command=lambda: display_label.config(text=display_label["text"][:-1]),
+    command=lambda: on_backspace_click(),
 ).grid(row=0, column=4, padx=5, pady=5)
 
 # Add the 'x' (multiply) button
