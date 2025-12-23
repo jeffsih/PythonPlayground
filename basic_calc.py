@@ -1,10 +1,12 @@
 """
 Basic Calculator using Tkinter
 
-Create a calculator window with clickable buttons and allow simple addition and subtraction
-Implement the actual calculation logic for '=' button.
+Created a calculator window with clickable buttons and allow simple addition and subtraction.
+
 The current_value isnt being returned and I dont know how to do so within tkinter button commands.
     Going to use Globals instead for now. Should refactor later to use a class based approach.
+
+Next: Add multiplication and division operations.
 
 Note: At this time BIDMAS is not implemented.
 """
@@ -13,22 +15,24 @@ import tkinter as tk
 
 input_values = []
 operations_list = []
-current_input = 0
+current_input = ""
 
 def on_num_click(num):
     global current_input
     # Append the number to the label text
     current = display_label["text"]
     display_label.config(text=current + str(num))
-    current_input = current + str(num)
+    current_input = current_input + str(num)
     
 
 def on_add_click():
     global current_input
+    global input_values
+    global operations_list
     # Get the current value from the label
     if display_label["text"] is None or display_label["text"] == "":
         return
-    print(current_input)
+    #print(current_input)
     input_values.append(int(current_input)) 
     current_input = ""
     operations_list.append('+')
@@ -38,6 +42,8 @@ def on_add_click():
 
 def on_subtract_click():
     global current_input
+    global input_values
+    global operations_list
     # Get the current value from the label
     if display_label["text"] is None or display_label["text"] == "":
         return
@@ -48,6 +54,39 @@ def on_subtract_click():
     # Append '-' to the label text
     display_label.config(text=display_label["text"] + " - ")
 
+def on_equal_click():
+    global current_input
+    global input_values
+    global operations_list
+
+    if display_label["text"] is None or display_label["text"] == "":
+        return
+    
+    # Store the final input inlcuding the equal sign
+    global input_on_calc 
+    input_on_calc = display_label["text"] + " = "
+
+    # Append the last input value and reset current input
+    print("current_input:", current_input)
+    input_values.append(int(current_input))
+    current_input = ""
+
+    # Perform calculation
+    result = input_values[0]
+
+    for i, operation in enumerate(operations_list):
+        print("Input values:", input_values)
+        if operation == '+':
+            result += input_values[i + 1]
+        elif operation == '-':
+            result -= input_values[i + 1] 
+    
+    # Display result
+    display_label.config(text=str(result))
+    
+    # Clear inputs for next calculation - this will be changed later
+    input_values.clear()
+    operations_list.clear()
 
 # Create the main window
 window = tk.Tk()
@@ -103,7 +142,7 @@ tk.Button(
     text="=",
     width=3,
     height=2,
-    command=lambda: None  # Placeholder for future implementation
+    command=lambda: on_equal_click()
 ).grid(row=3, column=2, padx=5, pady=5)
 
 window.mainloop()
