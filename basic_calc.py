@@ -6,10 +6,10 @@ Created a calculator window with clickable buttons and allow simple addition and
 The current_value isnt being returned and I dont know how to do so within tkinter button commands.
     Going to use Globals instead for now. Should refactor later to use a class based approach.
 
-Next:   - Add multiplication and division operations.
-        - Reset the display when a new calculation starts.
-        - Add a clear button to reset the calculator.
-        - Add a backspace button to remove the last digit entered.
+Next:   - Add multiplication and division operations. (Buttons are already in place)
+        - Reset the display when a new calculation starts. 
+        - Add a clear button to reset the calculator. (Button is already in place)
+        - Add a backspace button to remove the last digit entered. (Button is already in place)
 
 Note: At this time BIDMAS is not implemented.
 """
@@ -148,5 +148,42 @@ tk.Button(
     command=lambda: on_equal_click()
 ).grid(row=3, column=2, padx=5, pady=5)
 
+# Add the 'C' (clear) button
+tk.Button(
+    grid_frame,
+    text="C",
+    width=3,
+    height=2,
+    command=lambda: display_label.config(text="")
+).grid(row=3, column=0, padx=5, pady=5) 
+
+# Add the backspace button
+tk.Button(
+    grid_frame,
+    text="←",
+    width=3,
+    height=2,
+    command=lambda: display_label.config(text=display_label["text"][:-1])
+).grid(row=0, column=4, padx=5, pady=5)
+
+# Add the 'x' (multiply) button
+tk.Button(
+    grid_frame,
+    text="x",
+    width=3,
+    height=2,
+    command=lambda: on_multiply_click()
+).grid(row=2, column=3, padx=5, pady=5)
+
+# Add the '÷' (divide) button
+tk.Button(
+    grid_frame,
+    text="÷",
+    width=3,
+    height=2,
+    command=lambda: on_divide_click()
+).grid(row=3, column=3, padx=5, pady=5)
+
+# Start the tkinter main event loop
 window.mainloop()
 
