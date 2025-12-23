@@ -7,7 +7,7 @@ The current_value isnt being returned and I dont know how to do so within tkinte
     Going to use Globals instead for now. Should refactor later to use a class based approach.
 
 Next:   - Add multiplication and division operations. (Done)
-        - Reset the display when a new calculation starts. 
+        - Reset the display when a new calculation starts.
         - Add a clear button to reset the calculator. (Button is already in place)
         - Add a backspace button to remove the last digit entered. (Button is already in place)
         - Handle floats.
@@ -21,12 +21,14 @@ input_values = []
 operations_list = []
 current_input = ""
 
+
 def on_num_click(num):
     global current_input
     # Append the number to the label text
     current = display_label["text"]
     display_label.config(text=current + str(num))
     current_input = current_input + str(num)
+
 
 def on_add_click():
     global current_input
@@ -35,12 +37,13 @@ def on_add_click():
     # Get the current value from the label
     if display_label["text"] is None or display_label["text"] == "":
         return
-    #print(current_input)
-    input_values.append(int(current_input)) 
+    # print(current_input)
+    input_values.append(int(current_input))
     current_input = ""
-    operations_list.append('+')
+    operations_list.append("+")
     # Append '+' to the label text
     display_label.config(text=display_label["text"] + " + ")
+
 
 def on_subtract_click():
     global current_input
@@ -49,12 +52,13 @@ def on_subtract_click():
     # Get the current value from the label
     if display_label["text"] is None or display_label["text"] == "":
         return
-    
-    input_values.append(int(current_input)) 
+
+    input_values.append(int(current_input))
     current_input = ""
-    operations_list.append('-')
+    operations_list.append("-")
     # Append '-' to the label text
     display_label.config(text=display_label["text"] + " - ")
+
 
 def on_equal_click():
     global current_input
@@ -63,9 +67,9 @@ def on_equal_click():
 
     if display_label["text"] is None or display_label["text"] == "":
         return
-    
+
     # Store the final input inlcuding the equal sign
-    global input_on_calc 
+    global input_on_calc
     input_on_calc = display_label["text"] + " = "
 
     # Append the last input value and reset current input
@@ -79,10 +83,11 @@ def on_equal_click():
 
     # Display result
     display_label.config(text=str(result))
-    
+
     # Clear inputs for next calculation - this will be changed later
     input_values.clear()
     operations_list.clear()
+
 
 def calculate_bidmas(result):
     global input_values
@@ -91,11 +96,11 @@ def calculate_bidmas(result):
     # Perform multiplication and division first
     i = 0
     while i < len(operations_list):
-        if operations_list[i] == '*':
+        if operations_list[i] == "*":
             input_values[i] = input_values[i] * input_values[i + 1]
             operations_list.pop(i)
             input_values.pop(i + 1)
-        elif operations_list[i] == '/':
+        elif operations_list[i] == "/":
             input_values[i] = input_values[i] / input_values[i + 1]
             operations_list.pop(i)
             input_values.pop(i + 1)
@@ -105,12 +110,13 @@ def calculate_bidmas(result):
     # Perform addition and subtraction
     result = input_values[0]
     for i, operation in enumerate(operations_list):
-        if operation == '+':
+        if operation == "+":
             result += input_values[i + 1]
-        elif operation == '-':
+        elif operation == "-":
             result -= input_values[i + 1]
 
     return result
+
 
 def on_multiply_click():
     global current_input
@@ -119,12 +125,13 @@ def on_multiply_click():
     # Get the current value from the label
     if display_label["text"] is None or display_label["text"] == "":
         return
-    
-    input_values.append(int(current_input)) 
+
+    input_values.append(int(current_input))
     current_input = ""
-    operations_list.append('*')
+    operations_list.append("*")
     # Append 'x' to the label text
     display_label.config(text=display_label["text"] + " x ")
+
 
 def on_divide_click():
     global current_input
@@ -133,19 +140,17 @@ def on_divide_click():
     # Get the current value from the label
     if display_label["text"] is None or display_label["text"] == "":
         return
-    
-    input_values.append(int(current_input)) 
+
+    input_values.append(int(current_input))
     current_input = ""
-    operations_list.append('/')
+    operations_list.append("/")
     # Append '÷' to the label text
     display_label.config(text=display_label["text"] + " ÷ ")
-
 
 
 """
 Window Creation and Button Setup Followed by Main Loop.
 """
-
 
 
 # Create the main window
@@ -165,44 +170,33 @@ grid_frame.pack()
 for row in range(3):
     for col in range(3):
         button_num = row * 3 + col + 1
-        btn = tk.Button(grid_frame, text=str(button_num), width=3, height=2,
-                        command=lambda n=button_num: on_num_click(n))
+        btn = tk.Button(
+            grid_frame,
+            text=str(button_num),
+            width=3,
+            height=2,
+            command=lambda n=button_num: on_num_click(n),
+        )
         btn.grid(row=row, column=col, padx=5, pady=5)
 
 # Add the 0 button below the grid
 tk.Button(
-    grid_frame,
-    text="0",
-    width=3,
-    height=2,
-    command=lambda: on_num_click(0)
+    grid_frame, text="0", width=3, height=2, command=lambda: on_num_click(0)
 ).grid(row=3, column=1, padx=5, pady=5)
 
 # Add the '+' button
-tk.Button(
-    grid_frame,
-    text="+",
-    width=3,
-    height=2,
-    command=lambda: on_add_click()
-).grid(row=0, column=3, padx=5, pady=5)
+tk.Button(grid_frame, text="+", width=3, height=2, command=lambda: on_add_click()).grid(
+    row=0, column=3, padx=5, pady=5
+)
 
 # Add the '-' button
 tk.Button(
-    grid_frame,
-    text="-",
-    width=3,
-    height=2,
-    command=lambda: on_subtract_click()
+    grid_frame, text="-", width=3, height=2, command=lambda: on_subtract_click()
 ).grid(row=1, column=3, padx=5, pady=5)
 
 # Add the '=' button
 tk.Button(
-    grid_frame,
-    text="=",
-    width=3,
-    height=2,
-    command=lambda: on_equal_click()
+    grid_frame, text="=", width=3, height=2, command=lambda: on_equal_click()
 ).grid(row=3, column=2, padx=5, pady=5)
 
 # Add the 'C' (clear) button
@@ -211,8 +205,8 @@ tk.Button(
     text="C",
     width=3,
     height=2,
-    command=lambda: display_label.config(text="")
-).grid(row=3, column=0, padx=5, pady=5) 
+    command=lambda: display_label.config(text=""),
+).grid(row=3, column=0, padx=5, pady=5)
 
 # Add the backspace button
 tk.Button(
@@ -220,27 +214,18 @@ tk.Button(
     text="←",
     width=3,
     height=2,
-    command=lambda: display_label.config(text=display_label["text"][:-1])
+    command=lambda: display_label.config(text=display_label["text"][:-1]),
 ).grid(row=0, column=4, padx=5, pady=5)
 
 # Add the 'x' (multiply) button
 tk.Button(
-    grid_frame,
-    text="x",
-    width=3,
-    height=2,
-    command=lambda: on_multiply_click()
+    grid_frame, text="x", width=3, height=2, command=lambda: on_multiply_click()
 ).grid(row=2, column=3, padx=5, pady=5)
 
 # Add the '÷' (divide) button
 tk.Button(
-    grid_frame,
-    text="÷",
-    width=3,
-    height=2,
-    command=lambda: on_divide_click()
+    grid_frame, text="÷", width=3, height=2, command=lambda: on_divide_click()
 ).grid(row=3, column=3, padx=5, pady=5)
 
 # Start the tkinter main event loop
 window.mainloop()
-
