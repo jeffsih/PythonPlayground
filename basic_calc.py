@@ -77,26 +77,42 @@ def on_equal_click():
 
     # Perform calculation
     result = input_values[0]
+    result = calculate_bidmas(result)
 
-    # enumerate through operations list and apply each operation in sequence.
-        # Will need to refactor this to handle BIDMAS later.
-    for i, operation in enumerate(operations_list):
-        print("Input values:", input_values)
-        if operation == '+':
-            result += input_values[i + 1]
-        elif operation == '-':
-            result -= input_values[i + 1] 
-        elif operation == '*':
-            result *= input_values[i + 1]
-        elif operation == '/': # outputs a float for division.
-            result /= input_values[i + 1]
-    
     # Display result
     display_label.config(text=str(result))
     
     # Clear inputs for next calculation - this will be changed later
     input_values.clear()
     operations_list.clear()
+
+def calculate_bidmas(result):
+    global input_values
+    global operations_list
+
+    # Perform multiplication and division first
+    i = 0
+    while i < len(operations_list):
+        if operations_list[i] == '*':
+            input_values[i] = input_values[i] * input_values[i + 1]
+            operations_list.pop(i)
+            input_values.pop(i + 1)
+        elif operations_list[i] == '/':
+            input_values[i] = input_values[i] / input_values[i + 1]
+            operations_list.pop(i)
+            input_values.pop(i + 1)
+        else:
+            i += 1
+
+    # Perform addition and subtraction
+    result = input_values[0]
+    for i, operation in enumerate(operations_list):
+        if operation == '+':
+            result += input_values[i + 1]
+        elif operation == '-':
+            result -= input_values[i + 1]
+
+    return result
 
 def on_multiply_click():
     global current_input
