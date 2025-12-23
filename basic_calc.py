@@ -147,7 +147,15 @@ def on_divide_click():
     # Append '÷' to the label text
     display_label.config(text=display_label["text"] + " ÷ ")
 
-
+def on_clear_click():
+    global current_input
+    global input_values
+    global operations_list
+    # Clear all globals and display
+    current_input = ""
+    input_values.clear()
+    operations_list.clear()
+    display_label.config(text="")
 """
 Window Creation and Button Setup Followed by Main Loop.
 """
@@ -205,7 +213,7 @@ tk.Button(
     text="C",
     width=3,
     height=2,
-    command=lambda: display_label.config(text=""),
+    command=lambda: on_clear_click(),
 ).grid(row=3, column=0, padx=5, pady=5)
 
 # Add the backspace button
