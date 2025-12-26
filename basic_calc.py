@@ -9,7 +9,8 @@ The current_value isnt being returned and I dont know how to do so within tkinte
 Next:   - Add multiplication and division operations. (Done)
         - Reset the display when a new calculation starts.
         - Add a clear button to reset the calculator. (Done)
-        - Add a backspace button to remove the last digit entered. (Button is already in place)
+        - Add a backspace button to remove the last digit entered. (Done)
+            - May need further testing.
         - Handle floats.
 
 Note: At this time BIDMAS is not implemented. (Corrected - now implemented)
@@ -159,7 +160,7 @@ def on_clear_click():
     operations_list.clear()
     display_label.config(text="")
 
-def on_backspace_click():
+def on_backspace_click(): # Something in here is causing an error after deleting an operator.
     global current_input
     global operations_list
     # Remove the last character from the label text
@@ -167,15 +168,19 @@ def on_backspace_click():
     if len(current) > 0:
         if current[-1] == " ":
             # If the last character is a space, remove the last three characters (operator and spaces)
-            display_label.config(text=current[:-3]) # not working.
+            display_label.config(text=current[:-3])
             # Also need to remove the last operation from operations_list
             if operations_list:
                 operations_list.pop()
-            # Also need to remove the last input value from input_values
+
+            # Set current_input to the last input value & remove it from input_values.
+            current_input = input_values[-1] 
+            input_values.pop()
+            
         else:
 
             display_label.config(text=current[:-1])
-        current_input = current_input[:-1]
+            current_input = current_input[:-1] # Need to investigate what this is doing exactly.
 
 
 
