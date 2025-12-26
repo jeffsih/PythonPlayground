@@ -20,6 +20,8 @@ import tkinter as tk
 input_values = []
 operations_list = []
 current_input = ""
+reset_flag = False
+input_on_calc = ""  # Store the full input when '=' is pressed
 
 
 def on_num_click(num):
@@ -159,14 +161,23 @@ def on_clear_click():
 
 def on_backspace_click():
     global current_input
+    global operations_list
     # Remove the last character from the label text
     current = display_label["text"]
     if len(current) > 0:
-        display_label.config(text=current[:-1])
-        current_input = current_input[:-1]
-    # Remove the last character from the operations_list input if needed
+        if current[-1] == " ":
+            # If the last character is a space, remove the last three characters (operator and spaces)
+            display_label.config(text=current[:-3]) # not working.
+            # Also need to remove the last operation from operations_list
+            if operations_list:
+                operations_list.pop()
+            # Also need to remove the last input value from input_values
+        else:
 
-    # remove the last character from the input_values if needed
+            display_label.config(text=current[:-1])
+        current_input = current_input[:-1]
+
+
 
 """
 Window Creation and Button Setup Followed by Main Loop.
