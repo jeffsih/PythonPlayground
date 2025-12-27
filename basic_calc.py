@@ -7,7 +7,7 @@ The current_value isnt being returned and I dont know how to do so within tkinte
     Going to use Globals instead for now. Should refactor later to use a class based approach.
 
 Next:   - Add multiplication and division operations. (Done)
-        - Reset the display when a new calculation starts.
+        - Allow for continuous calculations without pressing clear each time.
         - Add a clear button to reset the calculator. (Done)
         - Add a backspace button to remove the last digit entered. (Done)
             - May need further testing.
@@ -90,6 +90,8 @@ def on_equal_click():
     # Clear inputs for next calculation - this will be changed later
     input_values.clear()
     operations_list.clear()
+    current_input = str(result)  # Allow for continuous calculations
+    
 
 
 def calculate_bidmas(result):
@@ -150,6 +152,7 @@ def on_divide_click():
     # Append '÷' to the label text
     display_label.config(text=display_label["text"] + " ÷ ")
 
+
 def on_clear_click():
     global current_input
     global input_values
@@ -159,6 +162,7 @@ def on_clear_click():
     input_values.clear()
     operations_list.clear()
     display_label.config(text="")
+
 
 def on_backspace_click(): # Something in here is causing an error after deleting an operator.
     global current_input
@@ -221,18 +225,18 @@ tk.Button(
 ).grid(row=3, column=1, padx=5, pady=5)
 
 # Add the '+' button
-tk.Button(grid_frame, text="+", width=3, height=2, command=lambda: on_add_click()).grid(
+tk.Button(grid_frame, text="+", width=3, height=2, bg="sky blue", command=lambda: on_add_click()).grid(
     row=0, column=3, padx=5, pady=5
 )
 
 # Add the '-' button
 tk.Button(
-    grid_frame, text="-", width=3, height=2, command=lambda: on_subtract_click()
+    grid_frame, text="-", width=3, height=2, bg="sky blue", command=lambda: on_subtract_click()
 ).grid(row=1, column=3, padx=5, pady=5)
 
 # Add the '=' button
 tk.Button(
-    grid_frame, text="=", width=3, height=2, command=lambda: on_equal_click()
+    grid_frame, text="=", width=3, height=2, bg="red4", command=lambda: on_equal_click()
 ).grid(row=3, column=2, padx=5, pady=5)
 
 # Add the 'C' (clear) button
@@ -241,6 +245,7 @@ tk.Button(
     text="C",
     width=3,
     height=2,
+    bg="dark green",
     command=lambda: on_clear_click(),
 ).grid(row=3, column=0, padx=5, pady=5)
 
@@ -250,17 +255,18 @@ tk.Button(
     text="←",
     width=3,
     height=2,
+    bg="orange",
     command=lambda: on_backspace_click(),
 ).grid(row=0, column=4, padx=5, pady=5)
 
 # Add the 'x' (multiply) button
 tk.Button(
-    grid_frame, text="x", width=3, height=2, command=lambda: on_multiply_click()
+    grid_frame, text="x", width=3, height=2, bg="sky blue", command=lambda: on_multiply_click()
 ).grid(row=2, column=3, padx=5, pady=5)
 
 # Add the '÷' (divide) button
 tk.Button(
-    grid_frame, text="÷", width=3, height=2, command=lambda: on_divide_click()
+    grid_frame, text="÷", width=3, height=2, bg="sky blue", command=lambda: on_divide_click()
 ).grid(row=3, column=3, padx=5, pady=5)
 
 # Start the tkinter main event loop
