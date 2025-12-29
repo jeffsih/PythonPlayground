@@ -11,9 +11,14 @@ Next:   - Add multiplication and division operations. (Done)
         - Add a clear button to reset the calculator. (Done)
         - Add a backspace button to remove the last digit entered. (Done)
             - May need further testing.
-        - Handle floats.
+        - Handle floats. (Done)
+        - Implement BIDMAS order of operations. (Done)
 
-Note: At this time BIDMAS is not implemented. (Corrected - now implemented)
+        TODO:   - Add keyboard support.
+        TODO:   - Improve the UI layout and design.
+        TODO:   - Add error handling for invalid inputs (e.g., division by zero).
+        TODO:   - Add more advanced functions (e.g., square root, exponentiation).
+
 """
 
 import tkinter as tk
