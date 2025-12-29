@@ -7,7 +7,7 @@ The current_value isnt being returned and I dont know how to do so within tkinte
     Going to use Globals instead for now. Should refactor later to use a class based approach.
 
 Next:   - Add multiplication and division operations. (Done)
-        - Allow for continuous calculations without pressing clear each time.
+        - Allow for continuous calculations without pressing clear each time. (Done)
         - Add a clear button to reset the calculator. (Done)
         - Add a backspace button to remove the last digit entered. (Done)
             - May need further testing.
@@ -41,7 +41,7 @@ def on_add_click():
     if display_label["text"] is None or display_label["text"] == "":
         return
     # print(current_input)
-    input_values.append(int(current_input))
+    input_values.append(float(current_input))
     current_input = ""
     operations_list.append("+")
     # Append '+' to the label text
@@ -56,7 +56,7 @@ def on_subtract_click():
     if display_label["text"] is None or display_label["text"] == "":
         return
 
-    input_values.append(int(current_input))
+    input_values.append(float(current_input))
     current_input = ""
     operations_list.append("-")
     # Append '-' to the label text
@@ -91,7 +91,6 @@ def on_equal_click():
     input_values.clear()
     operations_list.clear()
     current_input = str(result)  # Allow for continuous calculations
-    
 
 
 def calculate_bidmas(result):
@@ -131,7 +130,7 @@ def on_multiply_click():
     if display_label["text"] is None or display_label["text"] == "":
         return
 
-    input_values.append(int(current_input))
+    input_values.append(float(current_input))
     current_input = ""
     operations_list.append("*")
     # Append 'x' to the label text
@@ -146,7 +145,7 @@ def on_divide_click():
     if display_label["text"] is None or display_label["text"] == "":
         return
 
-    input_values.append(int(current_input))
+    input_values.append(float(current_input))
     current_input = ""
     operations_list.append("/")
     # Append '÷' to the label text
@@ -164,7 +163,7 @@ def on_clear_click():
     display_label.config(text="")
 
 
-def on_backspace_click(): # Something in here is causing an error after deleting an operator.
+def on_backspace_click():  # Something in here is causing an error after deleting an operator.
     global current_input
     global operations_list
     # Remove the last character from the label text
@@ -178,14 +177,14 @@ def on_backspace_click(): # Something in here is causing an error after deleting
                 operations_list.pop()
 
             # Set current_input to the last input value & remove it from input_values.
-            current_input = input_values[-1] 
+            current_input = input_values[-1]
             input_values.pop()
-            
+
         else:
-
             display_label.config(text=current[:-1])
-            current_input = current_input[:-1] # Need to investigate what this is doing exactly.
-
+            current_input = current_input[
+                :-1
+            ]  # Need to investigate what this is doing exactly.
 
 
 """
@@ -225,13 +224,23 @@ tk.Button(
 ).grid(row=3, column=1, padx=5, pady=5)
 
 # Add the '+' button
-tk.Button(grid_frame, text="+", width=3, height=2, bg="sky blue", command=lambda: on_add_click()).grid(
-    row=0, column=3, padx=5, pady=5
-)
+tk.Button(
+    grid_frame,
+    text="+",
+    width=3,
+    height=2,
+    bg="sky blue",
+    command=lambda: on_add_click(),
+).grid(row=0, column=3, padx=5, pady=5)
 
 # Add the '-' button
 tk.Button(
-    grid_frame, text="-", width=3, height=2, bg="sky blue", command=lambda: on_subtract_click()
+    grid_frame,
+    text="-",
+    width=3,
+    height=2,
+    bg="sky blue",
+    command=lambda: on_subtract_click(),
 ).grid(row=1, column=3, padx=5, pady=5)
 
 # Add the '=' button
@@ -247,7 +256,7 @@ tk.Button(
     height=2,
     bg="dark green",
     command=lambda: on_clear_click(),
-).grid(row=3, column=0, padx=5, pady=5)
+).grid(row=1, column=4, padx=5, pady=5)
 
 # Add the backspace button
 tk.Button(
@@ -261,13 +270,28 @@ tk.Button(
 
 # Add the 'x' (multiply) button
 tk.Button(
-    grid_frame, text="x", width=3, height=2, bg="sky blue", command=lambda: on_multiply_click()
+    grid_frame,
+    text="x",
+    width=3,
+    height=2,
+    bg="sky blue",
+    command=lambda: on_multiply_click(),
 ).grid(row=2, column=3, padx=5, pady=5)
 
 # Add the '÷' (divide) button
 tk.Button(
-    grid_frame, text="÷", width=3, height=2, bg="sky blue", command=lambda: on_divide_click()
+    grid_frame,
+    text="÷",
+    width=3,
+    height=2,
+    bg="sky blue",
+    command=lambda: on_divide_click(),
 ).grid(row=3, column=3, padx=5, pady=5)
+
+# Add a decimial point button
+tk.Button(
+    grid_frame, text=".", width=3, height=2, command=lambda: on_num_click(".")
+).grid(row=3, column=0, padx=5, pady=5)
 
 # Start the tkinter main event loop
 window.mainloop()
