@@ -13,8 +13,8 @@ Next:   - Add multiplication and division operations. (Done)
             - May need further testing.
         - Handle floats. (Done)
         - Implement BIDMAS order of operations. (Done)
+        - Add keyboard support. (Done)
 
-        TODO:   - Add keyboard support. (Done)
         TODO:   - Improve the UI layout and design.
         TODO:   - Add error handling for invalid inputs (e.g., division by zero).
         TODO:   - Add more advanced functions (e.g., square root, exponentiation).
@@ -168,7 +168,7 @@ def on_clear_click():
     display_label.config(text="")
 
 
-def on_backspace_click():  # Something in here is causing an error after deleting an operator.
+def on_backspace_click():
     global current_input
     global operations_list
     # Remove the last character from the label text
@@ -212,6 +212,8 @@ def detect_keypress(event):
         on_clear_click()
     elif event.keysym == "BackSpace":
         on_backspace_click()
+    else:
+        pass  # Ignore other keys
 
 
 """
