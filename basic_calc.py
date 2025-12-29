@@ -14,7 +14,7 @@ Next:   - Add multiplication and division operations. (Done)
         - Handle floats. (Done)
         - Implement BIDMAS order of operations. (Done)
 
-        TODO:   - Add keyboard support.
+        TODO:   - Add keyboard support. (Done)
         TODO:   - Improve the UI layout and design.
         TODO:   - Add error handling for invalid inputs (e.g., division by zero).
         TODO:   - Add more advanced functions (e.g., square root, exponentiation).
@@ -192,6 +192,28 @@ def on_backspace_click():  # Something in here is causing an error after deletin
             ]  # Need to investigate what this is doing exactly.
 
 
+def detect_keypress(event):
+    # Handle keypress events for calculator operations
+    if event.char.isdigit():
+        on_num_click(event.char)
+    elif event.char == ".":
+        on_num_click(event.char)
+    elif event.char == "+":
+        on_add_click()
+    elif event.char == "-":
+        on_subtract_click()
+    elif event.char == "*":
+        on_multiply_click()
+    elif event.char == "/":
+        on_divide_click()
+    elif event.char == "=" or event.char == "\r":
+        on_equal_click()
+    elif event.char.lower() == "c":
+        on_clear_click()
+    elif event.keysym == "BackSpace":
+        on_backspace_click()
+
+
 """
 Window Creation and Button Setup Followed by Main Loop.
 """
@@ -297,6 +319,9 @@ tk.Button(
 tk.Button(
     grid_frame, text=".", width=3, height=2, command=lambda: on_num_click(".")
 ).grid(row=3, column=0, padx=5, pady=5)
+
+# Bind keypress event to the window
+window.bind("<Key>", detect_keypress)
 
 # Start the tkinter main event loop
 window.mainloop()
